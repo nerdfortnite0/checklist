@@ -1,93 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerdy Me</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="https://i.ibb.co/gW5XwQF/nerdymeicon.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NerdyMe Planner</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
 
-<!-- Lock Screen -->
-<div id="lock-screen">
-  <h1>🔒 Welcome to Nerdy Me</h1>
-  <input type="password" id="unlockPassword" placeholder="Enter password...">
-  <button onclick="unlock()">Unlock</button>
-</div>
-
-<!-- Loading Screen -->
-<div id="loading-screen">
-  <div class="loader"></div>
-  <h1>Loading Nerdy Me...</h1>
-</div>
-
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar">
-  <div class="logo">🍕 Nerdy Me 🎮</div>
-  <button onclick="openTab('homework')">📚 Homework</button>
-  <button onclick="openTab('schedule')">🗓️ Schedule</button>
-  <button onclick="openTab('notes')">📝 Notes</button>
-  <button onclick="openTab('profile')">👤 Profile</button>
-  <button onclick="toggleTheme()">🌗 Theme</button>
-</div>
-
-<!-- Open Sidebar Button -->
-<button id="menu-btn" onclick="toggleSidebar()">☰</button>
-
-<!-- Content -->
-<div id="main-content">
-
-  <!-- Tabs -->
-  <div id="homework" class="tabcontent">
-    <h1>Homework</h1>
-    <button onclick="addHomework()">➕ Add Homework</button>
-    <table id="homeworkTable">
-      <thead><tr><th>Assignment</th><th>Due</th><th>Delete</th></tr></thead>
-      <tbody></tbody>
-    </table>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Nerdy Me</h2>
+    <ul>
+      <li onclick="switchTab('schedule')">📅 Schedule</li>
+      <li onclick="switchTab('todo')">✅ To-Do List</li>
+      <li onclick="openSchoolLink('lms')">🎓 School LMS</li>
+      <li onclick="openSchoolLink('sis')">📝 SIS Grades</li>
+    </ul>
   </div>
 
-  <div id="schedule" class="tabcontent">
-    <h1>Schedule</h1>
-    <button onclick="addSchedule()">➕ Add Schedule</button>
-    <table id="scheduleTable">
-      <thead><tr><th>Time</th><th>Activity</th><th>Delete</th></tr></thead>
-      <tbody></tbody>
-    </table>
+  <!-- Sidebar Toggle Button -->
+  <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <div id="schedule" class="tab">
+      <h1>Today's Schedule</h1>
+      <div id="scheduleList"></div>
+      <button onclick="addSchedule()">➕ Add Schedule</button>
+    </div>
+
+    <div id="todo" class="tab" style="display:none;">
+      <h1>Homework To-Do</h1>
+      <div id="todoList"></div>
+      <button onclick="addTodo()">➕ Add Homework</button>
+    </div>
   </div>
 
-  <div id="notes" class="tabcontent">
-    <h1>Notes</h1>
-    <textarea id="notesArea" placeholder="Type your notes here..."></textarea>
-  </div>
+  <!-- Music Player -->
+  <audio id="bgMusic" loop autoplay>
+    <source src="https://cdn.pixabay.com/audio/2023/03/17/audio_6c43ab17c6.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <button id="music-toggle" onclick="toggleMusic()">🔊</button>
 
-  <div id="profile" class="tabcontent">
-    <h1>My Profile</h1>
-    <button onclick="googleLogin()">Sign In with Google</button>
-    <div id="profileInfo"></div>
-  </div>
+  <!-- Floating AI Help Button -->
+  <div id="aiHelp" onclick="talkAI()">🤖</div>
 
-</div>
-
-<!-- Chatbot -->
-<div id="chatbot">
-  <button id="chat-toggle" onclick="toggleChat()">🤖</button>
-  <div id="chat-window" class="hidden">
-    <div id="chat-messages"></div>
-    <input type="text" id="userInput" placeholder="Ask Nerdy AI..." onkeydown="if(event.key==='Enter') sendMessage()">
-  </div>
-</div>
-
-<!-- Background floating objects -->
-<div id="floating-bg"></div>
-
-<!-- Music -->
-<audio id="bgMusic" loop autoplay muted>
-  <source src="https://files.catbox.moe/0rp7hg.mp3" type="audio/mpeg">
-</audio>
-
-<script src="script.js"></script>
-
+<script src="app.js"></script>
 </body>
 </html>
