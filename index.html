@@ -5,68 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nerdy Me</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="https://i.ibb.co/gW5XwQF/nerdymeicon.png" type="image/png">
 </head>
 <body>
 
+<!-- Lock Screen -->
+<div id="lock-screen">
+  <h1>🔒 Welcome to Nerdy Me</h1>
+  <input type="password" id="unlockPassword" placeholder="Enter password...">
+  <button onclick="unlock()">Unlock</button>
+</div>
+
+<!-- Loading Screen -->
 <div id="loading-screen">
+  <div class="loader"></div>
   <h1>Loading Nerdy Me...</h1>
 </div>
 
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar">
-  <h2>NERDY ME 🍕🎮</h2>
-  <button onclick="openLink('https://lms.fcps.edu/home')">Open LMS</button>
-  <button onclick="openLink('https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true')">Open SIS</button>
-  <button onclick="toggleTheme()">Switch Theme</button>
-  <select id="fontSelector" onchange="changeFont(this.value)">
-    <option value="Poppins">Poppins</option>
-    <option value="Orbitron">Orbitron</option>
-    <option value="Press Start 2P">Press Start 2P</option>
-  </select>
+  <div class="logo">🍕 Nerdy Me 🎮</div>
+  <button onclick="openTab('homework')">📚 Homework</button>
+  <button onclick="openTab('schedule')">🗓️ Schedule</button>
+  <button onclick="openTab('notes')">📝 Notes</button>
+  <button onclick="openTab('profile')">👤 Profile</button>
+  <button onclick="toggleTheme()">🌗 Theme</button>
 </div>
 
-<!-- Toggle sidebar button -->
+<!-- Open Sidebar Button -->
 <button id="menu-btn" onclick="toggleSidebar()">☰</button>
 
-<!-- Tabs -->
-<div class="tabs">
-  <button class="tablink" onclick="openTab('homework')">📚 Homework</button>
-  <button class="tablink" onclick="openTab('schedule')">🗓️ Schedule</button>
+<!-- Content -->
+<div id="main-content">
+
+  <!-- Tabs -->
+  <div id="homework" class="tabcontent">
+    <h1>Homework</h1>
+    <button onclick="addHomework()">➕ Add Homework</button>
+    <table id="homeworkTable">
+      <thead><tr><th>Assignment</th><th>Due</th><th>Delete</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="schedule" class="tabcontent">
+    <h1>Schedule</h1>
+    <button onclick="addSchedule()">➕ Add Schedule</button>
+    <table id="scheduleTable">
+      <thead><tr><th>Time</th><th>Activity</th><th>Delete</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="notes" class="tabcontent">
+    <h1>Notes</h1>
+    <textarea id="notesArea" placeholder="Type your notes here..."></textarea>
+  </div>
+
+  <div id="profile" class="tabcontent">
+    <h1>My Profile</h1>
+    <button onclick="googleLogin()">Sign In with Google</button>
+    <div id="profileInfo"></div>
+  </div>
+
 </div>
 
-<!-- Homework Section -->
-<div id="homework" class="tabcontent">
-  <h1>Homework Tracker</h1>
-  <button onclick="addHomework()">➕ Add Homework</button>
-  <table id="homeworkTable">
-    <thead>
-      <tr><th>Assignment</th><th>Due Date</th><th>Actions</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<!-- Schedule Section -->
-<div id="schedule" class="tabcontent" style="display:none;">
-  <h1>Weekly Schedule</h1>
-  <button onclick="addSchedule()">➕ Add Task</button>
-  <table id="scheduleTable">
-    <thead>
-      <tr><th>Time</th><th>Activity</th><th>Actions</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<!-- Floating Pizzas and Controllers -->
-<div id="floating-pizzas"></div>
-
-<!-- Music Player -->
-<audio id="backgroundMusic" loop autoplay muted>
-  <source src="https://files.catbox.moe/0rp7hg.mp3" type="audio/mpeg">
-</audio>
-
-<!-- AI Chatbot -->
+<!-- Chatbot -->
 <div id="chatbot">
   <button id="chat-toggle" onclick="toggleChat()">🤖</button>
   <div id="chat-window" class="hidden">
@@ -74,6 +78,14 @@
     <input type="text" id="userInput" placeholder="Ask Nerdy AI..." onkeydown="if(event.key==='Enter') sendMessage()">
   </div>
 </div>
+
+<!-- Background floating objects -->
+<div id="floating-bg"></div>
+
+<!-- Music -->
+<audio id="bgMusic" loop autoplay muted>
+  <source src="https://files.catbox.moe/0rp7hg.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 
