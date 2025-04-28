@@ -4,53 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nerdy Me</title>
+  
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/nrEXH5A.png">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <audio id="bg-music" src="https://files.catbox.moe/rlw0b9.mp3" autoplay loop></audio>
 
-  <div class="sidebar" id="sidebar">
-    <button class="close-btn" onclick="toggleSidebar()">✖</button>
-    <a href="https://lms.fcps.edu/home" target="_blank">School LMS</a>
-    <a href="https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true" target="_blank">Student SIS</a>
-    <a href="https://youtube.com" target="_blank">YouTube</a>
-  </div>
+<!-- Sidebar -->
+<div id="sidebar">
+  <h2 style="color:white;">📚 Nerdy Me</h2>
+  <a href="https://lms.fcps.edu/home" target="_blank">School LMS</a>
+  <a href="https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true" target="_blank">StudentVue</a>
+  <a href="#" onclick="toggleMusic()">🎵 Toggle Music</a>
+</div>
 
-  <button class="open-sidebar-btn" onclick="toggleSidebar()">☰ Open Menu</button>
+<!-- Menu Button -->
+<div id="menu-btn" onclick="document.getElementById('sidebar').style.left = '0px'">☰</div>
 
-  <h1 class="title">🎮 Nerdy Me 🍕</h1>
-
+<!-- Main content -->
+<div class="container">
+  <!-- Tabs -->
   <div class="tabs">
-    <button onclick="openTab('homework')">Homework 📚</button>
-    <button onclick="openTab('schedule')">Weekly Schedule 🗓️</button>
+    <button id="schedule-btn" class="active" onclick="openTab('schedule')">🗓 Weekly Schedule</button>
+    <button id="homework-btn" onclick="openTab('homework')">📚 Homework Tracker</button>
   </div>
 
-  <div id="homework" class="tab-content">
-    <h2>Homework Tracker</h2>
-    <button onclick="addHomework()">➕ Add Homework</button>
-    <table id="homework-table">
-      <tr><th>Subject</th><th>Assignment</th><th>Due Date</th><th>Action</th></tr>
-    </table>
-  </div>
-
-  <div id="schedule" class="tab-content" style="display:none;">
-    <h2>Weekly Schedule</h2>
-    <button onclick="addSchedule()">➕ Add Schedule</button>
+  <!-- Schedule Tab -->
+  <div id="schedule" class="tab-content">
+    <h3>Weekly Schedule 📅</h3>
     <table id="schedule-table">
-      <tr><th>Day</th><th>Time</th><th>Activity</th><th>Action</th></tr>
+      <tr><th>Time</th><th>Task</th><th>Action</th></tr>
     </table>
+    <button class="add-btn" onclick="addScheduleRow()">Add Task</button>
   </div>
 
-  <div class="chatbox" id="chatbox">
-    <div class="chat-header" onclick="toggleChat()">🤖 Nerdy AI - Click to Chat</div>
-    <div class="chat-body" id="chat-body">
-      <p>Hello! Need help? 🍕🎮</p>
-    </div>
-    <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter'){sendMessage();}">
+  <!-- Homework Tab -->
+  <div id="homework" class="tab-content" style="display:none;">
+    <h3>Homework Tracker ✏️</h3>
+    <table id="homework-table">
+      <tr><th>Homework</th><th>Due Date</th><th>Action</th></tr>
+    </table>
+    <button class="add-btn" onclick="addHomeworkRow()">Add Homework</button>
   </div>
+</div>
 
-  <canvas id="pixelCanvas"></canvas>
+<!-- Chat Box -->
+<div id="chat-box">
+  <div id="chat-header" onclick="toggleChat()">🤖 NerdyMe AI</div>
+  <div id="chat-body"></div>
+  <input id="chat-input" type="text" placeholder="Ask me something..." onkeydown="sendMessage(event)">
+</div>
 
-  <script src="script.js"></script>
+<!-- Scripts -->
+<script src="script.js"></script>
+
+<!-- Add functions to add and delete rows -->
+<script>
+function addScheduleRow() {
+  const table = document.getElementById('schedule-table');
+  const row = table.insertRow();
+  const timeCell = row.insertCell(0);
+  const taskCell = row.insertCell(1);
+  const actionCell = row.insertCell(2);
+  timeCell.contentEditable = true;
+  taskCell.contentEditable = true;
+  actionCell.innerHTML = '<button onclick="deleteRow(this)">❌</button>';
+}
+
+function addHomeworkRow() {
+  const table = document.getElementById('homework-table');
+  const row = table.insertRow();
+  const hwCell = row.insertCell(0);
+  const dateCell = row.insertCell(1);
+  const actionCell = row.insertCell(2);
+  hwCell.contentEditable = true;
+  dateCell.contentEditable = true;
+  actionCell.innerHTML = '<button onclick="deleteRow(this)">❌</button>';
+}
+
+function deleteRow(btn) {
+  const row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+}
+</script>
+
 </body>
 </html>
