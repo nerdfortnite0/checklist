@@ -1,115 +1,187 @@
+/* General */
 body {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(#e0f7fa, #f1f8e9);
-    overflow-x: hidden;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1f1f1f);
+  color: white;
+  overflow-x: hidden;
 }
 
-.loading-screen {
-    position: fixed;
-    background: #001f3f;
-    color: white;
-    font-size: 3em;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeOut 2s forwards;
-    animation-delay: 2s;
+h1, h2 {
+  text-align: center;
 }
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
+#menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #00f0ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1001;
 }
 
-#login-screen {
-    text-align: center;
-    margin-top: 20vh;
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 220px;
+  height: 100%;
+  background: #222;
+  padding: 20px;
+  box-shadow: 2px 0px 5px #00f0ff;
+  transition: 0.5s;
+  z-index: 1000;
 }
 
-#sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    background: #004d40;
-    height: 100%;
-    width: 250px;
-    padding-top: 60px;
-    transition: 0.3s;
+.sidebar h2 {
+  color: #00f0ff;
 }
 
-#sidebar button {
-    background: none;
-    color: white;
-    border: none;
-    padding: 15px;
-    text-align: left;
-    width: 100%;
-    font-size: 18px;
-    cursor: pointer;
+.sidebar button, .sidebar select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: #00f0ff;
+  cursor: pointer;
 }
 
-header {
-    background: #006064;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: relative;
+.sidebar button:hover, .sidebar select:hover {
+  background: #00f0ff;
+  color: #222;
 }
 
-#menu-button {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
+.tabs {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
-nav {
-    text-align: center;
-    margin: 20px;
+.tablink {
+  padding: 10px 20px;
+  background: #00f0ff;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-nav button {
-    margin: 5px;
-    padding: 10px 20px;
-    border: none;
-    background: linear-gradient(to right, #00e5ff, #ff9100);
-    color: white;
-    font-size: 18px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: transform 0.2s;
+.tablink:hover {
+  background: #007a99;
 }
 
-nav button:hover {
-    transform: scale(1.1);
+.tabcontent {
+  padding: 20px;
 }
 
-.tab {
-    padding: 20px;
+table {
+  width: 90%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.05);
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    padding: 15px;
-    margin-bottom: 15px;
+th, td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #00f0ff;
+}
+
+button {
+  cursor: pointer;
+}
+
+#floating-pizzas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url('https://i.ibb.co/9pwVnZC/pizza.png'), url('https://i.ibb.co/4F8nKbs/controller.png');
+  background-repeat: repeat;
+  background-size: 100px 100px;
+  animation: float 30s linear infinite;
+  z-index: 0;
+}
+
+@keyframes float {
+  0% { background-position: 0 0; }
+  100% { background-position: 500px 500px; }
+}
+
+/* Loading Screen */
+#loading-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #00f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  z-index: 2000;
+}
+
+/* AI Chat */
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#chat-toggle {
+  background: #00f0ff;
+  color: #000;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 24px;
 }
 
 #chat-window {
-    height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: white;
+  width: 250px;
+  height: 300px;
+  background: #111;
+  border: 2px solid #00f0ff;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-window.hidden {
+  display: none;
+}
+
+#chat-messages {
+  flex: 1;
+  overflow-y: auto;
+}
+
+#userInput {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tabs {
+    flex-direction: column;
+  }
 }
