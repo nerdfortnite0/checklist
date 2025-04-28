@@ -1,99 +1,97 @@
-// Password
-function checkPassword() {
-    const input = document.getElementById('password-input').value;
-    if (input === 'Wondimu911') {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-    } else {
-        alert('Wrong password!');
-    }
-}
+// Loading Screen
+window.onload = function() {
+  setTimeout(() => {
+    document.getElementById('loading-screen').style.display = 'none';
+  }, 2000);
+};
 
 // Sidebar
 function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar.style.left === '0px') {
-        sidebar.style.left = '-250px';
-    } else {
-        sidebar.style.left = '0px';
-    }
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar.style.left === "0px") {
+    sidebar.style.left = "-250px";
+  } else {
+    sidebar.style.left = "0px";
+  }
 }
 
 // Tabs
-function switchTab(tabId) {
-    document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
-    document.getElementById(tabId).style.display = 'block';
+function openTab(tabName) {
+  document.querySelectorAll('.tabcontent').forEach(tab => tab.style.display = 'none');
+  document.getElementById(tabName).style.display = 'block';
 }
 
-// Homework
+// Open links
+function openLink(url) {
+  window.open(url, '_blank');
+}
+
+// Add Homework
 function addHomework() {
-    const homeworkList = document.getElementById('homework-list');
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-        <input placeholder="Homework Title">
-        <input type="date">
-        <button onclick="this.parentElement.remove()">Done</button>
-    `;
-    homeworkList.appendChild(card);
+  const table = document.getElementById('homeworkTable').getElementsByTagName('tbody')[0];
+  const row = table.insertRow();
+  const assignmentCell = row.insertCell(0);
+  const dateCell = row.insertCell(1);
+  const actionsCell = row.insertCell(2);
+
+  assignmentCell.innerHTML = `<input type="text" placeholder="Assignment">`;
+  dateCell.innerHTML = `<input type="date">`;
+  actionsCell.innerHTML = `<button onclick="deleteRow(this)">❌</button>`;
 }
 
-// Schedule
+// Add Schedule
 function addSchedule() {
-    const scheduleList = document.getElementById('schedule-list');
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-        <input placeholder="Task">
-        <input placeholder="Time">
-        <button onclick="this.parentElement.remove()">Done</button>
-    `;
-    scheduleList.appendChild(card);
+  const table = document.getElementById('scheduleTable').getElementsByTagName('tbody')[0];
+  const row = table.insertRow();
+  const timeCell = row.insertCell(0);
+  const activityCell = row.insertCell(1);
+  const actionsCell = row.insertCell(2);
+
+  timeCell.innerHTML = `<input type="time">`;
+  activityCell.innerHTML = `<input type="text" placeholder="Activity">`;
+  actionsCell.innerHTML = `<button onclick="deleteRow(this)">❌</button>`;
+}
+
+// Delete Row
+function deleteRow(btn) {
+  btn.parentNode.parentNode.remove();
+}
+
+// Theme Switch
+function toggleTheme() {
+  document.body.classList.toggle('light');
+}
+
+// Font Picker
+function changeFont(font) {
+  document.body.style.fontFamily = font;
 }
 
 // Chatbot
-function sendChat() {
-    const chatInput = document.getElementById('chat-input').value;
-    const chatWindow = document.getElementById('chat-window');
-    if (chatInput.trim() === '') return;
-    const userMessage = document.createElement('div');
-    userMessage.textContent = "🧑: " + chatInput;
-    chatWindow.appendChild(userMessage);
-
-    const botMessage = document.createElement('div');
-    botMessage.textContent = "🤖: " + getBotResponse(chatInput);
-    chatWindow.appendChild(botMessage);
-
-    chatInput.value = '';
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+function toggleChat() {
+  document.getElementById('chat-window').classList.toggle('hidden');
 }
 
-function getBotResponse(input) {
-    input = input.toLowerCase();
-    if (input.includes('homework')) return "Don't forget to check your Homework tab!";
-    if (input.includes('font')) return "Click 'Change Font' in the sidebar!";
-    if (input.includes('music')) return "Click Play/Pause Music in the sidebar!";
-    return "I'm here to help you, Nerdy Star! ⭐";
-}
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const msg = input.value.trim();
+  if (msg === '') return;
 
-// Music
-function toggleMusic() {
-    const music = document.getElementById('background-music');
-    if (music.paused) {
-        music.play();
-    } else {
-        music.pause();
-    }
-}
+  const chat = document.getElementById('chat-messages');
+  const userMsg = document.createElement('div');
+  userMsg.innerText = "You: " + msg;
+  chat.appendChild(userMsg);
 
-// Font changer
-function changeFont() {
-    const fonts = ['Orbitron', 'Comic Neue', 'Pixelify Sans', 'Arial', 'Courier New'];
-    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
-    document.body.style.fontFamily = randomFont;
-}
+  const botMsg = document.createElement('div');
+  if (msg.toLowerCase().includes('homework') || msg.toLowerCase().includes('assignment')) {
+    botMsg.innerText = "🤖 Add your homework by clicking ➕ in Homework tab!";
+  } else if (msg.toLowerCase().includes('schedule') || msg.toLowerCase().includes('plan')) {
+    botMsg.innerText = "🤖 You can add your activities in Schedule tab!";
+  } else {
+    botMsg.innerText = "🤖 I'm here to help! Try asking about homework or schedule.";
+  }
+  chat.appendChild(botMsg);
 
-// Sidebar links
-function openLink(url) {
-    window.open(url, '_blank');
+  input.value = '';
+  chat.scrollTop = chat.scrollHeight;
 }
