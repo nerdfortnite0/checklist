@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #111, #222);
+  color: white;
+  overflow-x: hidden;
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  text-align: center;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #00f0ff, #ff9900);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: linear-gradient(45deg, #ff9900, #00f0ff);
+}
+
+.tab {
+  padding: 20px;
+}
+
+#login-screen {
+  text-align: center;
+  margin-top: 100px;
+}
+
+#password-input {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  width: 200px;
+}
+
+@keyframes moveBackground {
+  0% {background-position: 0 0;}
+  100% {background-position: 1000px 1000px;}
+}
+
+body {
+  background-image: url('https://i.imgur.com/6RMhx.gif'); /* 90s pixel GIF */
+  background-size: cover;
+  background-attachment: fixed;
+  animation: moveBackground 60s linear infinite;
+}
