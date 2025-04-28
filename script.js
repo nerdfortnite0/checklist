@@ -1,83 +1,78 @@
-// Sidebar open/close
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar.style.left === '0px') {
-    sidebar.style.left = '-250px';
-  } else {
-    sidebar.style.left = '0px';
-  }
-}
+// Auto-open sidebar
+window.onload = () => {
+  document.getElementById("sidebar").style.left = "0px";
+};
 
-// Tabs switch
+// Switch Tabs
 function openTab(tabName) {
-  const tabs = document.getElementsByClassName('tab-content');
+  let tabs = document.getElementsByClassName("tab-content");
   for (let tab of tabs) {
-    tab.style.display = 'none';
+    tab.style.display = "none";
   }
-  document.getElementById(tabName).style.display = 'block';
+  document.getElementById(tabName).style.display = "block";
+
+  let buttons = document.querySelectorAll(".tabs button");
+  buttons.forEach(btn => btn.classList.remove("active"));
+  
+  document.getElementById(tabName + "-btn").classList.add("active");
 }
 
-// Homework table add
-function addHomework() {
-  const table = document.getElementById('homework-table');
-  const row = table.insertRow();
-  row.innerHTML = `
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td><button onclick="deleteRow(this)">🗑️ Delete</button></td>
-  `;
+// Music Player
+let music = new Audio('https://cdn.pixabay.com/audio/2022/03/24/audio_8b1db8f94d.mp3');
+music.loop = true;
+music.volume = 0.3;
+music.play();
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
 }
 
-// Schedule table add
-function addSchedule() {
-  const table = document.getElementById('schedule-table');
-  const row = table.insertRow();
-  row.innerHTML = `
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td><button onclick="deleteRow(this)">🗑️ Delete</button></td>
-  `;
-}
-
-// Delete table row
-function deleteRow(btn) {
-  btn.parentNode.parentNode.remove();
-}
-
-// Chatbox toggle
+// Chat AI Toggle
 function toggleChat() {
   const chatBody = document.getElementById('chat-body');
-  if (chatBody.style.display === 'none') {
-    chatBody.style.display = 'block';
-  } else {
+  if (chatBody.style.display === 'block') {
     chatBody.style.display = 'none';
+  } else {
+    chatBody.style.display = 'block';
   }
 }
 
-// Sending AI message
-function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const chatBody = document.getElementById('chat-body');
-  if (input.value.trim() !== '') {
-    const userMessage = document.createElement('p');
-    userMessage.textContent = "You: " + input.value;
-    chatBody.appendChild(userMessage);
+// Simple NerdyMe AI
+function sendMessage(event) {
+  if (event.key === 'Enter') {
+    const input = event.target;
+    const msg = input.value.trim();
+    if (msg !== "") {
+      const chatBody = document.getElementById('chat-body');
+      const userMsg = document.createElement('div');
+      userMsg.innerText = "You: " + msg;
+      chatBody.appendChild(userMsg);
 
-    const botMessage = document.createElement('p');
-    botMessage.textContent = "🤖 Nerdy Me: I'll help you with that! 🍕";
-    chatBody.appendChild(botMessage);
+      const reply = document.createElement('div');
+      reply.innerText = "NerdyMe AI: Keep going! You're doing great! 🍕🎮";
+      chatBody.appendChild(reply);
 
-    input.value = '';
-    chatBody.scrollTop = chatBody.scrollHeight;
+      chatBody.scrollTop = chatBody.scrollHeight;
+      input.value = '';
+    }
   }
 }
 
-// Moving Pixel Background
-const canvas = document.getElementById('pixelCanvas');
+// Floating pizzas and controllers
+const canvas = document.createElement('canvas');
+canvas.id = 'pixelCanvas';
+document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
-let pixels = [];
+
+const icons = [];
+const imgPizza = new Image();
+const imgController = new Image();
+imgPizza.src = 'https://i.imgur.com/nrEXH5A.png';
+imgController.src = 'https://i.imgur.com/GvjE6d9.png';
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -86,29 +81,34 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-for (let i = 0; i < 100; i++) {
-  pixels.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: 2 + Math.random() * 3,
-    speedX: (Math.random() - 0.5) * 2,
-    speedY: (Math.random() - 0.5) * 2,
-    color: Math.random() > 0.5 ? '#00f0ff' : '#ff8000'
-  });
+function createIcons() {
+  for (let i = 0; i < 20; i++) {
+    icons.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      speed: 0.5 + Math.random(),
+      img: Math.random() > 0.5 ? imgPizza : imgController,
+      size: 30 + Math.random() * 30
+    });
+  }
 }
 
-function drawPixels() {
+function animateIcons() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let p of pixels) {
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-    p.x += p.speedX;
-    p.y += p.speedY;
-    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+  for (let icon of icons) {
+    ctx.drawImage(icon.img, icon.x, icon.y, icon.size, icon.size);
+    icon.y += icon.speed;
+    if (icon.y > canvas.height) {
+      icon.y = -icon.size;
+      icon.x = Math.random() * canvas.width;
+    }
   }
-  requestAnimationFrame(drawPixels);
+  requestAnimationFrame(animateIcons);
 }
-drawPixels();
+
+imgPizza.onload = () => {
+  imgController.onload = () => {
+    createIcons();
+    animateIcons();
+  }
+};
