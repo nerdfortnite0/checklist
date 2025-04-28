@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,38 +7,49 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="login-screen">
-    <h1>🔒 Welcome to Nerdy Me</h1>
-    <input type="password" id="password-input" placeholder="Enter Password">
-    <button onclick="checkPassword()">Enter</button>
+  <audio id="bg-music" src="https://files.catbox.moe/rlw0b9.mp3" autoplay loop></audio>
+
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">✖</button>
+    <a href="https://lms.fcps.edu/home" target="_blank">School LMS</a>
+    <a href="https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true" target="_blank">Student SIS</a>
+    <a href="https://youtube.com" target="_blank">YouTube</a>
   </div>
 
-  <div id="main-content" style="display:none;">
-    <header>
-      <h1>🧠 Nerdy Me</h1>
-      <nav>
-        <button onclick="switchTab('homework')">Homework</button>
-        <button onclick="switchTab('schedule')">Weekly Schedule</button>
-      </nav>
-    </header>
+  <button class="open-sidebar-btn" onclick="toggleSidebar()">☰ Open Menu</button>
 
-    <div id="homework" class="tab">
-      <h2>📚 Homework Tracker</h2>
-      <button onclick="addHomework()">Add Homework</button>
-      <div id="homework-list"></div>
-    </div>
+  <h1 class="title">🎮 Nerdy Me 🍕</h1>
 
-    <div id="schedule" class="tab" style="display:none;">
-      <h2>🗓️ Weekly Schedule</h2>
-      <button onclick="addSchedule()">Add Activity</button>
-      <div id="schedule-list"></div>
-    </div>
+  <div class="tabs">
+    <button onclick="openTab('homework')">Homework 📚</button>
+    <button onclick="openTab('schedule')">Weekly Schedule 🗓️</button>
   </div>
 
-  <audio autoplay loop>
-    <source src="background.mp3" type="audio/mpeg">
-    Your browser does not support background music.
-  </audio>
+  <div id="homework" class="tab-content">
+    <h2>Homework Tracker</h2>
+    <button onclick="addHomework()">➕ Add Homework</button>
+    <table id="homework-table">
+      <tr><th>Subject</th><th>Assignment</th><th>Due Date</th><th>Action</th></tr>
+    </table>
+  </div>
+
+  <div id="schedule" class="tab-content" style="display:none;">
+    <h2>Weekly Schedule</h2>
+    <button onclick="addSchedule()">➕ Add Schedule</button>
+    <table id="schedule-table">
+      <tr><th>Day</th><th>Time</th><th>Activity</th><th>Action</th></tr>
+    </table>
+  </div>
+
+  <div class="chatbox" id="chatbox">
+    <div class="chat-header" onclick="toggleChat()">🤖 Nerdy AI - Click to Chat</div>
+    <div class="chat-body" id="chat-body">
+      <p>Hello! Need help? 🍕🎮</p>
+    </div>
+    <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter'){sendMessage();}">
+  </div>
+
+  <canvas id="pixelCanvas"></canvas>
 
   <script src="script.js"></script>
 </body>
