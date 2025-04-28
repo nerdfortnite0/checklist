@@ -1,64 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Nerdy Me</title>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nerdy Me</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="loading-screen">
-        <h1>🍕 Nerdy Me 🍕</h1>
-    </div>
 
-    <div id="login-screen">
-        <h2>Enter Password</h2>
-        <input type="password" id="password-input" placeholder="Password">
-        <button onclick="checkPassword()">Unlock</button>
-    </div>
+<div id="loading-screen">
+  <h1>Loading Nerdy Me...</h1>
+</div>
 
-    <div id="main-content" style="display:none;">
-        <aside id="sidebar">
-            <button onclick="openLink('https://lms.fcps.edu/home')">School LMS</button>
-            <button onclick="openLink('https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true')">Student SIS</button>
-            <button onclick="changeFont()">Change Font</button>
-            <button onclick="toggleMusic()">Play/Pause Music</button>
-        </aside>
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <h2>NERDY ME 🍕🎮</h2>
+  <button onclick="openLink('https://lms.fcps.edu/home')">Open LMS</button>
+  <button onclick="openLink('https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true')">Open SIS</button>
+  <button onclick="toggleTheme()">Switch Theme</button>
+  <select id="fontSelector" onchange="changeFont(this.value)">
+    <option value="Poppins">Poppins</option>
+    <option value="Orbitron">Orbitron</option>
+    <option value="Press Start 2P">Press Start 2P</option>
+  </select>
+</div>
 
-        <header>
-            <h1>NERDY ME</h1>
-            <button id="menu-button" onclick="toggleSidebar()">☰</button>
-        </header>
+<!-- Toggle sidebar button -->
+<button id="menu-btn" onclick="toggleSidebar()">☰</button>
 
-        <nav>
-            <button onclick="switchTab('homework')">Homework</button>
-            <button onclick="switchTab('schedule')">Schedule</button>
-            <button onclick="switchTab('chat')">Chatbot</button>
-        </nav>
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tablink" onclick="openTab('homework')">📚 Homework</button>
+  <button class="tablink" onclick="openTab('schedule')">🗓️ Schedule</button>
+</div>
 
-        <section id="homework" class="tab">
-            <h2>📚 Homework Tracker</h2>
-            <div id="homework-list"></div>
-            <button onclick="addHomework()">+ Add Homework</button>
-        </section>
+<!-- Homework Section -->
+<div id="homework" class="tabcontent">
+  <h1>Homework Tracker</h1>
+  <button onclick="addHomework()">➕ Add Homework</button>
+  <table id="homeworkTable">
+    <thead>
+      <tr><th>Assignment</th><th>Due Date</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
-        <section id="schedule" class="tab" style="display:none;">
-            <h2>🗓️ Weekly Schedule</h2>
-            <div id="schedule-list"></div>
-            <button onclick="addSchedule()">+ Add Schedule</button>
-        </section>
+<!-- Schedule Section -->
+<div id="schedule" class="tabcontent" style="display:none;">
+  <h1>Weekly Schedule</h1>
+  <button onclick="addSchedule()">➕ Add Task</button>
+  <table id="scheduleTable">
+    <thead>
+      <tr><th>Time</th><th>Activity</th><th>Actions</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
-        <section id="chat" class="tab" style="display:none;">
-            <h2>🤖 Nerdy AI</h2>
-            <div id="chat-window"></div>
-            <input type="text" id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()">
-            <button onclick="sendChat()">Send</button>
-        </section>
+<!-- Floating Pizzas and Controllers -->
+<div id="floating-pizzas"></div>
 
-        <audio id="background-music" loop>
-            <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1ad2f1dbd6.mp3?filename=relaxing-vlog-lofi-122191.mp3" type="audio/mpeg">
-        </audio>
+<!-- Music Player -->
+<audio id="backgroundMusic" loop autoplay muted>
+  <source src="https://files.catbox.moe/0rp7hg.mp3" type="audio/mpeg">
+</audio>
 
-    </div>
+<!-- AI Chatbot -->
+<div id="chatbot">
+  <button id="chat-toggle" onclick="toggleChat()">🤖</button>
+  <div id="chat-window" class="hidden">
+    <div id="chat-messages"></div>
+    <input type="text" id="userInput" placeholder="Ask Nerdy AI..." onkeydown="if(event.key==='Enter') sendMessage()">
+  </div>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
