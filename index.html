@@ -1,98 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerdy Me</title>
-  
-  <!-- Favicon / Logo -->
-  <link rel="icon" type="image/png" href="https://i.imgur.com/nrEXH5A.png">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Nerdy Me</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <div class="loading-screen">
+        <h1>🍕 Nerdy Me 🍕</h1>
+    </div>
 
-<!-- Sidebar -->
-<div id="sidebar">
-  <h2 style="color:white;">📚 Nerdy Me</h2>
-  <a href="https://lms.fcps.edu/home" target="_blank">School LMS</a>
-  <a href="https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true" target="_blank">StudentVue</a>
-  <a href="#" onclick="toggleMusic()">🎵 Toggle Music</a>
-</div>
+    <div id="login-screen">
+        <h2>Enter Password</h2>
+        <input type="password" id="password-input" placeholder="Password">
+        <button onclick="checkPassword()">Unlock</button>
+    </div>
 
-<!-- Menu Button -->
-<div id="menu-btn" onclick="document.getElementById('sidebar').style.left = '0px'">☰</div>
+    <div id="main-content" style="display:none;">
+        <aside id="sidebar">
+            <button onclick="openLink('https://lms.fcps.edu/home')">School LMS</button>
+            <button onclick="openLink('https://sisstudent.fcps.edu/SVUE/PXP2_Login_Student_OVR.aspx?regenerateSessionId=true')">Student SIS</button>
+            <button onclick="changeFont()">Change Font</button>
+            <button onclick="toggleMusic()">Play/Pause Music</button>
+        </aside>
 
-<!-- Main content -->
-<div class="container">
-  <!-- Tabs -->
-  <div class="tabs">
-    <button id="schedule-btn" class="active" onclick="openTab('schedule')">🗓 Weekly Schedule</button>
-    <button id="homework-btn" onclick="openTab('homework')">📚 Homework Tracker</button>
-  </div>
+        <header>
+            <h1>NERDY ME</h1>
+            <button id="menu-button" onclick="toggleSidebar()">☰</button>
+        </header>
 
-  <!-- Schedule Tab -->
-  <div id="schedule" class="tab-content">
-    <h3>Weekly Schedule 📅</h3>
-    <table id="schedule-table">
-      <tr><th>Time</th><th>Task</th><th>Action</th></tr>
-    </table>
-    <button class="add-btn" onclick="addScheduleRow()">Add Task</button>
-  </div>
+        <nav>
+            <button onclick="switchTab('homework')">Homework</button>
+            <button onclick="switchTab('schedule')">Schedule</button>
+            <button onclick="switchTab('chat')">Chatbot</button>
+        </nav>
 
-  <!-- Homework Tab -->
-  <div id="homework" class="tab-content" style="display:none;">
-    <h3>Homework Tracker ✏️</h3>
-    <table id="homework-table">
-      <tr><th>Homework</th><th>Due Date</th><th>Action</th></tr>
-    </table>
-    <button class="add-btn" onclick="addHomeworkRow()">Add Homework</button>
-  </div>
-</div>
+        <section id="homework" class="tab">
+            <h2>📚 Homework Tracker</h2>
+            <div id="homework-list"></div>
+            <button onclick="addHomework()">+ Add Homework</button>
+        </section>
 
-<!-- Chat Box -->
-<div id="chat-box">
-  <div id="chat-header" onclick="toggleChat()">🤖 NerdyMe AI</div>
-  <div id="chat-body"></div>
-  <input id="chat-input" type="text" placeholder="Ask me something..." onkeydown="sendMessage(event)">
-</div>
+        <section id="schedule" class="tab" style="display:none;">
+            <h2>🗓️ Weekly Schedule</h2>
+            <div id="schedule-list"></div>
+            <button onclick="addSchedule()">+ Add Schedule</button>
+        </section>
 
-<!-- Scripts -->
-<script src="script.js"></script>
+        <section id="chat" class="tab" style="display:none;">
+            <h2>🤖 Nerdy AI</h2>
+            <div id="chat-window"></div>
+            <input type="text" id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button onclick="sendChat()">Send</button>
+        </section>
 
-<!-- Add functions to add and delete rows -->
-<script>
-function addScheduleRow() {
-  const table = document.getElementById('schedule-table');
-  const row = table.insertRow();
-  const timeCell = row.insertCell(0);
-  const taskCell = row.insertCell(1);
-  const actionCell = row.insertCell(2);
-  timeCell.contentEditable = true;
-  taskCell.contentEditable = true;
-  actionCell.innerHTML = '<button onclick="deleteRow(this)">❌</button>';
-}
+        <audio id="background-music" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1ad2f1dbd6.mp3?filename=relaxing-vlog-lofi-122191.mp3" type="audio/mpeg">
+        </audio>
 
-function addHomeworkRow() {
-  const table = document.getElementById('homework-table');
-  const row = table.insertRow();
-  const hwCell = row.insertCell(0);
-  const dateCell = row.insertCell(1);
-  const actionCell = row.insertCell(2);
-  hwCell.contentEditable = true;
-  dateCell.contentEditable = true;
-  actionCell.innerHTML = '<button onclick="deleteRow(this)">❌</button>';
-}
-
-function deleteRow(btn) {
-  const row = btn.parentNode.parentNode;
-  row.parentNode.removeChild(row);
-}
-</script>
-
+    </div>
 </body>
 </html>
